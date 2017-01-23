@@ -16,12 +16,12 @@
     },
     "scripts": {        
         "post-install-cmd": [
-            "Src\GenerateReportClass::generateReport"
+            "src/GenerateReportClass::generateReport"
         ]
     },
     "autoload": {
         "psr-4": {
-            "Src\\": "src/"
+            "src\\": "src/"
         }
     }
 }
