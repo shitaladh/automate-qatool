@@ -7,7 +7,7 @@
             "email": "s.adhegaonkar@easternenterprise.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "",
     "require": {
         "phpmd/phpmd": "~2.4",
         "squizlabs/php_codesniffer": "~2.6",
