@@ -14,8 +14,13 @@
         "sebastian/phpcpd": "*",
         "phpmetrics/phpmetrics": "*"
     },
-    "scripts": {
-        "post-update-cmd": "Src\\GenerateReportClass::generateReport"
+    "scripts": {        
+        "post-install-cmd": [
+            "Src\\GenerateReportClass::generateReport"
+        ],
+        "post-update-cmd": [
+            "Src\\GenerateReportClass::generateReport"
+        ]
     },
     "autoload": {
         "psr-4": {
