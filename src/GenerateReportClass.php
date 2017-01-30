@@ -42,20 +42,19 @@ class GenerateReportClass
 		exec('php vendor/bin/phpcs --standard=reports/phprcs.xml app > '.$codesnifferReport);	
 
 		//generate Mess detector report
-		/*$messDetectorReport = 'reports/phpmd/phpmd.csv';		
-		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);	    	*/	
-
-		//convert txt report file to excel
-		header('Content-type: application/ms-excel');
-		header('Content-Disposition: attachment; filename='.'test.xlsx');
+		$messDetectorReport = 'reports/phpmd/phpmd.csv';		
+		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);
 
 		self::convertReportToExcel($codesnifferReport,'php://output');
-		/*self::convertReportToExcel($messDetectorReport,'php://output');*/
+		self::convertReportToExcel($messDetectorReport,'php://output');
 		return true;
     }
 
     public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
     {
+    	//convert txt report file to excel
+		header('Content-type: application/ms-excel');
+		header('Content-Disposition: attachment; filename='.'test.xlsx');
         //set cache
         $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
         PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
