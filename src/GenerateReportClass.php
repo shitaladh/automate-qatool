@@ -28,10 +28,6 @@ class GenerateReportClass
 
     public static function createDir()
     {
-    	//convert txt report file to excel
-		header('Content-type: application/ms-excel');
-		header('Content-Disposition: attachment; filename='.'test.xlsx');
-
     	mkdir('reports/codesniffer', 0777, true);
     	if (!file_exists('reports/phpmd'))
     	{
@@ -47,7 +43,11 @@ class GenerateReportClass
 
 		//generate Mess detector report
 		$messDetectorReport = 'reports/phpmd/phpmd.csv';		
-		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);	
+		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);	    		
+
+		//convert txt report file to excel
+		header('Content-type: application/ms-excel');
+		header('Content-Disposition: attachment; filename='.'test.xlsx');
 
 		self::convertReportToExcel($codesnifferReport,'php://output');
 		self::convertReportToExcel($messDetectorReport,'php://output');
