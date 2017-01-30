@@ -39,12 +39,11 @@ class GenerateReportClass
 
 		//generate Codesniffer report
 		$codesnifferReport = 'reports/codesniffer/phpcs.csv';
-		chmod('vendor/bin/', 0777); 
-		exec('vendor/bin/phpcs --standard=reports/phprcs.xml app > '.$codesnifferReport);	
+		exec('php vendor/bin/phpcs --standard=reports/phprcs.xml app > '.$codesnifferReport);	
 
 		//generate Mess detector report
 		$messDetectorReport = 'reports/phpmd/phpmd.csv';		
-		exec('vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);	    		
+		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);	    		
 
 		//convert txt report file to excel
 		header('Content-type: application/ms-excel');
