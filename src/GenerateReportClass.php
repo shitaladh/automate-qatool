@@ -15,7 +15,7 @@ class GenerateReportClass
     	//convert csv report file to excel
 		header('Content-type: application/ms-excel');
 		header('Content-Disposition: attachment; filename='.'test.xlsx');
-		
+
     	$composer = $event->getComposer();
         $event->getIO()->write("Show me after INSTALL command");
         if (!file_exists('reports')) {
@@ -93,4 +93,3 @@ class GenerateReportClass
         return true;
     }
 }
-?>
