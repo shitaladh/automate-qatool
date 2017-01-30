@@ -16,17 +16,17 @@ class GenerateReportClass
         $event->getIO()->write("Show me after INSTALL command");
         if (!file_exists('reports')) {
     		mkdir('reports', 0777, true);  
-    		$this->createDir();
+    		self::createDir();
     		
 		} else {
 			if (!file_exists('reports/codesniffer')) {
-				$this->createDir();
+				self::createDir();
 			}
 		}
 		return true;
     }
 
-    public function createDir()
+    public static function createDir()
     {
     	mkdir('reports/codesniffer', 0777, true);
     	if (!file_exists('reports/phpmd'))
@@ -49,12 +49,12 @@ class GenerateReportClass
 		header('Content-type: application/ms-excel');
 		header('Content-Disposition: attachment; filename='.'test.xlsx');
 
-		$this->convertReportToExcel($codesnifferReport,'php://output');
-		$this->convertReportToExcel($messDetectorReport,'php://output');
+		self::convertReportToExcel($codesnifferReport,'php://output');
+		self::convertReportToExcel($messDetectorReport,'php://output');
 		return true;
     }
 
-    public function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
+    public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
     {
         //set cache
         $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
