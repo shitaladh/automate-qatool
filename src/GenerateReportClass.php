@@ -1,5 +1,4 @@
 <?php
-
 namespace Src;
 
 use PHPExcel\IOFactory;
@@ -12,6 +11,7 @@ class GenerateReportClass
 {
     public static function generateReport(Event $event)
     {
+    	ob_start();
     	$composer = $event->getComposer();
         $event->getIO()->write("Show me after INSTALL command");
         if (!file_exists('reports')) {
@@ -23,12 +23,12 @@ class GenerateReportClass
 				self::createDir();
 			}
 		}
+		ob_end_flush();
 		return true;
     }
 
     public static function createDir()
-    {
-    	ob_start();
+    {    	
     	mkdir('reports/codesniffer', 0777, true);
     	if (!file_exists('reports/phpmd'))
     	{
