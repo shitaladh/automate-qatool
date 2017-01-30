@@ -1,8 +1,12 @@
 <?php
 
+namespace Src;
+
 require_once 'vendor/autoload.php';
 use PHPExcel\IOFactory;
 
+use Composer\Script\Event;
+use Composer\Installer\PackageEvent;
 
 class GenerateReportClass
 {
