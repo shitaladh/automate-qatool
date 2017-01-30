@@ -15,11 +15,11 @@
         "phpmetrics/phpmetrics": "*"
     },
     "scripts": {
-        "post-create-project-cmd": "src\\GenerateReportClass::generateReport"
+        "post-update-cmd": "Src\\GenerateReportClass::generateReport"
     },
     "autoload": {
         "psr-4": {
-            "src\\": "src/"
+            "Src\\": "src/"
         }
     }
 }
