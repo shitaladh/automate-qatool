@@ -26,7 +26,7 @@ class GenerateReportClass
 		return true;
     }
 
-    public static function createDir()
+    public function createDir()
     {
     	mkdir('reports/codesniffer', 0777, true);
     	if (!file_exists('reports/phpmd'))
@@ -54,7 +54,7 @@ class GenerateReportClass
 		return true;
     }
 
-    public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
+    public function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
     {
         //set cache
         $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
