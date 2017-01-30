@@ -47,7 +47,8 @@ class GenerateReportClass
 		$this->convertReportToExcel($messDetectorReport,'php://output');
     }
 
-     public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null) {
+    public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
+    {
         //set cache
         $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
         PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
