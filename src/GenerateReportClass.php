@@ -10,7 +10,7 @@ use Composer\Installer\PackageEvent;
 
 class GenerateReportClass
 {
-    public static function generateReport(Event $event)
+    public function generateReport(Event $event)
     {
     	$composer = $event->getComposer();
         $event->getIO()->write("Show me after INSTALL command");
