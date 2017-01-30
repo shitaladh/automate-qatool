@@ -2,11 +2,11 @@
 
 namespace Src;
 
-require_once 'vendor/autoload.php';
 use PHPExcel\IOFactory;
 
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
+require_once 'vendor/autoload.php';
 
 class GenerateReportClass
 {
@@ -53,7 +53,7 @@ class GenerateReportClass
 
     public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
     {
-    	//convert txt report file to excel
+    	//convert csv report file to excel
 		header('Content-type: application/ms-excel');
 		header('Content-Disposition: attachment; filename='.'test.xlsx');
         //set cache
@@ -92,3 +92,4 @@ class GenerateReportClass
         return true;
     }
 }
+?>
