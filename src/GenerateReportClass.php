@@ -12,6 +12,10 @@ class GenerateReportClass
     public static function generateReport(Event $event)
     {
     	ob_start();
+    	//convert csv report file to excel
+		header('Content-type: application/ms-excel');
+		header('Content-Disposition: attachment; filename='.'test.xlsx');
+		
     	$composer = $event->getComposer();
         $event->getIO()->write("Show me after INSTALL command");
         if (!file_exists('reports')) {
@@ -52,10 +56,7 @@ class GenerateReportClass
     }
 
     public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
-    {
-    	//convert csv report file to excel
-		header('Content-type: application/ms-excel');
-		header('Content-Disposition: attachment; filename='.'test.xlsx');
+    {    	
         //set cache
         $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
         PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
