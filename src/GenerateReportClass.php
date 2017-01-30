@@ -13,7 +13,7 @@ class GenerateReportClass
     public static function generateReport(Event $event)
     {
     	$composer = $event->getComposer();
-        //$event->getIO()->write("Show me after INSTALL command");
+        $event->getIO()->write("Show me after INSTALL command");
         if (!file_exists('reports')) {
     		mkdir('reports', 0777, true);  
     		$this->createDir();
@@ -23,6 +23,7 @@ class GenerateReportClass
 				$this->createDir();
 			}
 		}
+		return true;
     }
 
     public static function createDir()
@@ -50,6 +51,7 @@ class GenerateReportClass
 
 		$this->convertReportToExcel($codesnifferReport,'php://output');
 		$this->convertReportToExcel($messDetectorReport,'php://output');
+		return true;
     }
 
     public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
