@@ -10,12 +10,7 @@ require_once 'vendor/autoload.php';
 class GenerateReportClass
 {
     public static function generateReport(Event $event)
-    {
-    	ob_start();
-    	//convert csv report file to excel
-		header('Content-type: application/ms-excel');
-		header('Content-Disposition: attachment; filename='.'test.xlsx');
-
+    {    	
     	$composer = $event->getComposer();
         $event->getIO()->write("Show me after INSTALL command");
         if (!file_exists('reports')) {
@@ -27,7 +22,6 @@ class GenerateReportClass
 				self::createDir();
 			}
 		}
-		ob_end_flush();
 		return true;
     }
 
@@ -57,6 +51,11 @@ class GenerateReportClass
 
     public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
     {    	
+    	ob_start(); 	
+
+    	//convert csv report file to excel
+		header('Content-type: application/ms-excel');
+		header('Content-Disposition: attachment; filename='.'test.xlsx');
         //set cache
         $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
         PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
@@ -89,7 +88,8 @@ class GenerateReportClass
 
         //write excel file
         $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
-        $objWriter->save($xls_file);
+        $objWriter->save($xls_file);        
+		ob_end_flush();
         return true;
     }
 }
