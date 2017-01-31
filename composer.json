@@ -13,7 +13,7 @@
         "squizlabs/php_codesniffer": "~2.6",
         "sebastian/phpcpd": "*",
         "phpmetrics/phpmetrics": "*",
-        "phpoffice/phpexcel": "~"
+        "phpoffice/phpexcel": "*"
     },
     "scripts": {        
         "post-install-cmd": [
