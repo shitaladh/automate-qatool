@@ -1,6 +1,6 @@
 <?php
-namespace Src;
 
+use PHPExcel\PHPExcel\IOFactory;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 require_once 'vendor/autoload.php';
@@ -48,8 +48,7 @@ class GenerateReportClass
     }
 
     public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
-    {            
-        use PHPExcel\PHPExcel\IOFactory;
+    {
 
         include 'phpexcel/Classes/PHPExcel/IOFactory.php';
 
