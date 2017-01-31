@@ -11,7 +11,8 @@ class GenerateReportClass
 {
     public static function generateReport(Event $event)
     {    	
-    	$composer = $event->getComposer();
+    	exec("git clone https://github.com/ddeboer/phpexcel"); 
+        $composer = $event->getComposer();
         $event->getIO()->write("Show me after INSTALL command");
         if (!file_exists('reports')) {
     		mkdir('reports', 0777, true);  
