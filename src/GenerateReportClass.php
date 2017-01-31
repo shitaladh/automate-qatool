@@ -1,5 +1,4 @@
 <?php
-use src\GenerateReportClass;
 
 use vendor\phpoffice\phpexcel\Classes\PHPExcel\IOFactory;
 use Composer\Script\Event;
