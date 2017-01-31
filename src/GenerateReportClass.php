@@ -1,6 +1,6 @@
 <?php
+namespace Src;
 
-use PHPExcel\PHPExcel\IOFactory;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 require_once 'vendor/autoload.php';
