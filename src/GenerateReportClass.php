@@ -1,7 +1,7 @@
 <?php
 namespace Src;
 
-use PHPExcel\IOFactory;
+use Src\IOFactory;
 
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
@@ -44,13 +44,15 @@ class GenerateReportClass
 		$messDetectorReport = 'reports/phpmd/phpmd.csv';		
 		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);
 
-		self::convertReportToExcel($codesnifferReport,'phpcs');
-		self::convertReportToExcel($messDetectorReport,'phprmd');
+		self::convertReportToExcel($codesnifferReport,'php://output');
+		self::convertReportToExcel($messDetectorReport,'php://output');
 		return true;
     }
 
-    public static function convertReportToExcel($csv_file, $xls_file)
+    public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
     {    	
+        include 'src/IOFactory.php';
+
         $objReader = PHPExcel_IOFactory::createReader('CSV');
 
         // If the files uses a delimiter other than a comma (e.g. a tab), then tell the reader
@@ -58,10 +60,11 @@ class GenerateReportClass
         // If the files uses an encoding other than UTF-8 or ASCII, then tell the reader
         $objReader->setInputEncoding('UTF-16LE');
 
-        $objPHPExcel = $objReader->load($csv_file);
+        $objPHPExcel = $objReader->load('MyCSVFile.csv');
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save($xls_file.'xls');
-/*
+        $objWriter->save('MyExcelFile.xls');
+    	/*ob_start(); 	
+
     	//convert csv report file to excel
 		header('Content-type: application/ms-excel');
 		header('Content-Disposition: attachment; filename='.'test.xlsx');
@@ -97,7 +100,8 @@ class GenerateReportClass
 
         //write excel file
         $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
-        $objWriter->save($xls_file);  */      
+        $objWriter->save($xls_file);        
+		ob_end_flush();*/
         return true;
     }
 }
