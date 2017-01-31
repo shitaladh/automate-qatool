@@ -1,6 +1,6 @@
 <?php
 namespace Src;
-
+namespace PHPExcel;
 use PHPExcel\IOFactory;
 
 use Composer\Script\Event;
