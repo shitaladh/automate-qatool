@@ -50,8 +50,8 @@ class GenerateReportClass
     public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
     {    
         namespace PHPExcel;	
-        
-        use PHPExcel\PHPExcel\IOFactory.php;
+
+        use PHPExcel\PHPExcel\IOFactory;
 
         include 'phpexcel/Classes/PHPExcel/IOFactory.php';
 
