@@ -31,8 +31,8 @@ if (!defined('PHPEXCEL_ROOT')) {
 	/**
 	 * @ignore
 	 */
-	define('PHPEXCEL_ROOT', dirname(__FILE__) . '/../');
-	require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+	define('PHPEXCEL_ROOT', dirname(__FILE__));
+	require(PHPEXCEL_ROOT . 'Autoloader.php');
 }
 
 /**
