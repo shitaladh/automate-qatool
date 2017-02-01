@@ -1,6 +1,6 @@
 <?php
 namespace Src;
-use vendor\phpoffice\phpexcel\Classes\PHPExcel\PHPExcel_IOFactory;
+use phpoffice\phpexcel\Classes\PHPExcel\PHPExcel_IOFactory;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 require_once 'vendor/autoload.php';
