@@ -59,7 +59,7 @@ class GenerateReportClass
         $objReader = PHPExcel_IOFactory::createReader('CSV');
         $objReader->setDelimiter(' ');
         $objReader->setEnclosure('');
-        $objReader->setLineEnding("\r\n");
+        //$objReader->setLineEnding("\r\n");
         $objReader->setSheetIndex(0);
         $objPHPExcel = $objReader->load($csv_file);
 
