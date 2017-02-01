@@ -49,7 +49,7 @@ class GenerateReportClass
 
     public static function convertReportToExcel($csv_file, $xls_file)
     {
-        require_once 'phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
+        require_once 'vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
         $objReader = PHPExcel_IOFactory::createReader('CSV');
 
         // If the files uses a delimiter other than a comma (e.g. a tab), then tell the reader
