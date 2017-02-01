@@ -42,15 +42,15 @@ class GenerateReportClass
 		$codesnifferReport = 'reports/codesniffer/phpcssummary.csv';
 		exec('php vendor/bin/phpcs -s --report=source --standard=reports/phprcs.xml app > '.$codesnifferReport);	
  		//generate Mess detector report
-		$messDetectorReport = 'reports/phpmd/phpmd.csv';		
+		$messDetectorReport = 'reports/phpmd/phpmd.txt';		
 		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);
 
-		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcssummary','reports/codesniffer/new-phpcssummary.csv');
-		self::convertReportToExcel($messDetectorReport,'reports/phpmd/phpmd','reports/phpmd/new-phpmd.csv');
+		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcssummary','reports/codesniffer/new-phpcssummary.csv',$messDetectorReport);
+		//self::convertReportToExcel($messDetectorReport,'reports/phpmd/phpmd','reports/phpmd/new-phpmd.txt');
 		return true;
     }
 
-    public static function convertReportToExcel($csv_file, $xls_file, $new_file)
+    public static function convertReportToExcel($csv_file, $xls_file, $new_file,$md_file)
     {
         $filename = $xls_file.'.xlsx';
 
@@ -90,7 +90,7 @@ class GenerateReportClass
 
         $objPHPExcel->getActiveSheet()->insertNewRowBefore(1, 6);
         $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(60);
-        
+
         //-----Create a Writer and output the file to the browser-----
         $objWriter2007 = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
@@ -116,6 +116,85 @@ class GenerateReportClass
             NULL,
             'A2'
         );
+
+        //create new cell
+        for($i=7;$i=count($allDataInSheet);$i++){
+            $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, 5);
+        }
+
+        //multiply two cells
+        for($j=7;$j<=37;$j++){
+            $colD = ($objPHPExcel->getActiveSheet()->getCell('B'.$j)->getValue())*($objPHPExcel->getActiveSheet()->getCell('C'.$j)->getValue());
+            $objPHPExcel->getActiveSheet()->SetCellValue('D'.$j, $colD);
+
+        }
+
+        //addition of cells
+        $colDSum=0;
+        for($k=7;$k<=37;$k++){
+            $colDSum = ($objPHPExcel->getActiveSheet()->getCell('D'.$k)->getValue()) + $colDSum;
+        }
+        $objPHPExcel->getActiveSheet()->setCellValue('B6', 'Instance');
+        $objPHPExcel->getActiveSheet()->setCellValue('C6', 'Multiplier');
+        $objPHPExcel->getActiveSheet()->setCellValue('D6', 'Score');
+        $objPHPExcel->getActiveSheet()->setCellValue('A5', 'Problems Score (0 is perfect, less is better)');
+        $objPHPExcel->getActiveSheet()->SetCellValue('D5', $colDSum);
+        $objPHPExcel->getActiveSheet()->setCellValue('A4', 'Grade - 10 (Perfect) to 0 (Worse) (Score out of 10)');
+
+        if($colDSum == 0){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '10');
+        }elseif($colDSum <=10){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '9');    
+        }elseif($colDSum <=50){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '8');
+        }elseif($colDSum <=100){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '7');
+        }elseif($colDSum <=250){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '6');
+        }elseif($colDSum <=500){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '5');
+        }elseif($colDSum <=1000){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '4');
+        }elseif($colDSum <=1500){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '3');
+        }elseif($colDSum <=2000){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '2');
+        }elseif($colDSum <=2500){
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '1');
+        }else{
+            $objPHPExcel->getActiveSheet()->SetCellValue('D4', '0');
+        } 
+
+
+        //get mess detector count
+        $md_filepath = $md_file;
+        $md_handle = fopen($md_filepath, "r");
+        $md_lineNo = 0;
+        if ($md_handle) {
+            while (($line = fgets($md_handle)) !== false) {
+            $md_lineNo++;
+            }
+        fclose($md_handle);
+        } else {
+            // error opening the file.
+        } 
+        $objPHPExcel->getActiveSheet()->setCellValue('A55', 'PHP Mess detector Report');
+        $objPHPExcel->getActiveSheet()->setCellValue('B55', $md_lineNo);
+
+
+       /* //get copypaste detector count
+        $filepath = __DIR__ . "/" . $argv[1] . "/reports/copypaste/phpcpd.txt";
+        $handle = fopen($filepath, "r");
+        $lineNo = 0;
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+            $lineNo++;
+            }
+        fclose($handle);
+        } else {
+            // error opening the file.
+        }*/
+
         $objWriter2007->save("$filename");  //push out to the client browser
     	
         return true;
