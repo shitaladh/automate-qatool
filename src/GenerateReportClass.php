@@ -1,6 +1,6 @@
 <?php
 namespace Src;
-use phpoffice\phpexcel\Classes\PHPExcel\IOFactory;
+use phpoffice\phpexcel\Classes\PHPExcel\PHPExcel_IOFactory;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 require_once 'vendor/autoload.php';
@@ -49,6 +49,7 @@ class GenerateReportClass
 
     public static function convertReportToExcel($csv_file, $xls_file)
     {
+        require_once 'phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
         $objReader = PHPExcel_IOFactory::createReader('CSV');
 
         // If the files uses a delimiter other than a comma (e.g. a tab), then tell the reader
