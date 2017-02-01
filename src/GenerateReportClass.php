@@ -10,7 +10,7 @@ class GenerateReportClass
 {
     public static function generateReport(Event $event)
     {    	
-        $composer = $event->getComposer();
+        ob_start();
         if (!file_exists('reports')) {
     		mkdir('reports', 0777, true);  
     		self::createDir();
@@ -20,6 +20,7 @@ class GenerateReportClass
 				self::createDir();
 			}
 		}
+        ob_end_flush();
 		return true;
     }
 
