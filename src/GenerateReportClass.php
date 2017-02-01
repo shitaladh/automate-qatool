@@ -52,11 +52,6 @@ class GenerateReportClass
     {
         $filename = $xls_file.'.xlsx';
 
-        // set headers to redirect output to client browser as a file download
-        header('Content-Type: application/vnd.openXMLformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="myfile.xlsx"');
-        header('Cache-Control: max-age=0');
-
         //-----Create a reader, set some parameters and read in the file-----
         $objReader = PHPExcel_IOFactory::createReader('CSV');
         $objReader->setDelimiter(' ');
