@@ -4,6 +4,8 @@ use PHPExcel;
 use PHPExcel_IOFactory;
 use PHPExcel_CachedObjectStorageFactory;
 use PHPExcel_Settings;
+use Reader\PHPExcel_Reader_CSV;
+use Writer\PHPExcel_Writer_Excel2007;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 require_once 'vendor/autoload.php';
