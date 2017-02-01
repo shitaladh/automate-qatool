@@ -1,6 +1,6 @@
 <?php
 namespace Src;
-use phpoffice\phpexcel\Classes\PHPExcel\IOFactory;
+use phpoffice\phpexcel\Classes\PHPExcel\PHPExcel_IOFactory;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 require_once 'vendor/autoload.php';
@@ -42,16 +42,13 @@ class GenerateReportClass
 		$messDetectorReport = 'reports/phpmd/phpmd.csv';		
 		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);
 
-		self::convertReportToExcel($codesnifferReport,'php://output');
-		self::convertReportToExcel($messDetectorReport,'php://output');
+		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcs');
+		self::convertReportToExcel($messDetectorReport,'reports/phpmd/phpmd');
 		return true;
     }
 
-    public static function convertReportToExcel($csv_file, $xls_file, $csv_enc=null)
+    public static function convertReportToExcel($csv_file, $xls_file)
     {
-
-        require_once 'vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
-
         $objReader = PHPExcel_IOFactory::createReader('CSV');
 
         // If the files uses a delimiter other than a comma (e.g. a tab), then tell the reader
@@ -61,7 +58,7 @@ class GenerateReportClass
 
         $objPHPExcel = $objReader->load('MyCSVFile.csv');
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save('MyExcelFile.xls');
+        $objWriter->save($xls_file.'.xls');
     	
         return true;
     }
