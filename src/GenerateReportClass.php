@@ -2,6 +2,8 @@
 namespace Src;
 use PHPExcel;
 use PHPExcel_IOFactory;
+use PHPExcel_Reader_CSV;
+use PHPExcel_Writer_Excel2007;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 require_once 'vendor/autoload.php';
@@ -51,7 +53,7 @@ class GenerateReportClass
     public static function convertReportToExcel($csv_file, $xls_file)
     {
         $filename = $xls_file.'.xlsx';
-        
+
         //-----Create a reader, set some parameters and read in the file-----
         $objReader = PHPExcel_IOFactory::createReader('CSV');
         $objReader->setDelimiter(' ');
