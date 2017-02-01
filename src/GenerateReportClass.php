@@ -86,7 +86,7 @@ class GenerateReportClass
         $objReader->setEnclosure('');
         //$objReader->setLineEnding("\r\n");
         $objReader->setSheetIndex(0);
-        $objPHPExcel = $objReader->load($csv_file);
+        $objPHPExcel = $objReader->load($new_file);
 
         $objPHPExcel->getActiveSheet()->insertNewRowBefore(1, 6);
         $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(60);
