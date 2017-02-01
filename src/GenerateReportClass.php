@@ -57,7 +57,7 @@ class GenerateReportClass
         // If the files uses an encoding other than UTF-8 or ASCII, then tell the reader
         $objReader->setInputEncoding('UTF-16LE');
 
-        $objPHPExcel = $objReader->load('MyCSVFile.csv');
+        $objPHPExcel = $objReader->load($csv_file);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save($xls_file.'.xls');
     	
