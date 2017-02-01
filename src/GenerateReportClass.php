@@ -90,6 +90,7 @@ class GenerateReportClass
 
         $objPHPExcel->getActiveSheet()->insertNewRowBefore(1, 6);
         $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(60);
+        
         //-----Create a Writer and output the file to the browser-----
         $objWriter2007 = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
