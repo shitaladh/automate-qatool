@@ -45,14 +45,40 @@ class GenerateReportClass
 		$messDetectorReport = 'reports/phpmd/phpmd.csv';		
 		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);
 
-		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcssummary');
-		self::convertReportToExcel($messDetectorReport,'reports/phpmd/phpmd');
+		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcssummary','reports/codesniffer/new-phpcssummary.csv');
+		self::convertReportToExcel($messDetectorReport,'reports/phpmd/phpmd','reports/phpmd/new-phpmd.csv');
 		return true;
     }
 
-    public static function convertReportToExcel($csv_file, $xls_file)
+    public static function convertReportToExcel($csv_file, $xls_file, $new_file)
     {
         $filename = $xls_file.'.xlsx';
+
+        $filepath = $csv_file;
+        $handle = fopen($filepath, "r");
+        $lineNo = 0;
+        $handle1 = fopen($new_file, 'a+');
+        ftruncate($handle1, 0);
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+            $lineNo++;
+            if($lineNo >= 6){
+                    // process the line read.
+                $line = substr($line, 4);
+                $line = preg_replace("/\s+/", ' ', $line);
+                explode(" ",$line);
+                if(count(explode(" ",$line)) == 3){
+                    $handle2 = fopen($new_file, 'a+');
+                    fwrite($handle2,$line. PHP_EOL);
+                }
+            }
+            //echo $line. PHP_EOL;
+            }
+
+            fclose($handle);
+        } else {
+            // error opening the file.
+        }         
 
         //-----Create a reader, set some parameters and read in the file-----
         $objReader = PHPExcel_IOFactory::createReader('CSV');
