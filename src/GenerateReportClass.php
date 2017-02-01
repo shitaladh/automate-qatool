@@ -55,7 +55,8 @@ class GenerateReportClass
         // If the files uses a delimiter other than a comma (e.g. a tab), then tell the reader
         $objReader->setDelimiter("\t");
         // If the files uses an encoding other than UTF-8 or ASCII, then tell the reader
-        $objReader->setInputEncoding('UTF-16LE');
+        //$objReader->setInputEncoding('UTF-16LE');
+        //$objReader->utf8_encode();
 
         $objPHPExcel = $objReader->load($csv_file);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
