@@ -2,6 +2,8 @@
 namespace Src;
 use PHPExcel;
 use PHPExcel_IOFactory;
+use Composer\Script\Event;
+use Composer\Installer\PackageEvent;
 require_once 'vendor/autoload.php';
 
 class GenerateReportClass
@@ -46,7 +48,7 @@ class GenerateReportClass
 		return true;
     }
 
-    public static function convertReportToExcel($csv_file, $xls_file,$csv_enc = null)
+    public static function convertReportToExcel($csv_file, $xls_file)
     {
         $filename = $xls_file.'.xlsx';
 
