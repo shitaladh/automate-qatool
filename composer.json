@@ -17,11 +17,9 @@
     },
     "scripts": {        
         "post-install-cmd": [
-            "mkdir reports_test",
             "Src\\GenerateReportClass::generateReport"
         ],
         "post-update-cmd": [
-            "mkdir reports_test",
             "Src\\GenerateReportClass::generateReport"
         ]
     },
