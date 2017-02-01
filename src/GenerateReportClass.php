@@ -48,46 +48,41 @@ class GenerateReportClass
 		return true;
     }
 
-    public static function convertReportToExcel($csv_file, $xls_file)
+    public static function convertReportToExcel($csv_file, $xls_file,$csv_enc = null)
     {
-        $filename = $xls_file.'.xlsx';
+        //set cache
+        $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
+        PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
 
-        //-----Create a reader, set some parameters and read in the file-----
-        $objReader = PHPExcel_IOFactory::createReader('CSV');
-        $objReader->setDelimiter(' ');
-        $objReader->setEnclosure('');
-        $objReader->setLineEnding("\r\n");
-        $objReader->setSheetIndex(0);
+        //open csv file
+        $objReader = new PHPExcel_Reader_CSV();
+        if ($csv_enc != null)
+            $objReader->setInputEncoding($csv_enc);
         $objPHPExcel = $objReader->load($csv_file);
+        $in_sheet = $objPHPExcel->getActiveSheet();
 
-        $objPHPExcel->getActiveSheet()->insertNewRowBefore(1, 6);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(60);
-        //-----Create a Writer and output the file to the browser-----
-        $objWriter2007 = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
+        //open excel file
+        $objPHPExcel = new PHPExcel();
+        $out_sheet = $objPHPExcel->getActiveSheet();
 
-        $allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-        $sortArray = array();
+        //row index start from 1
+        $row_index = 0;
+        foreach ($in_sheet->getRowIterator() as $row) {
+            $row_index++;
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(false);
 
-        foreach($allDataInSheet as $person){
-            foreach($person as $key=>$value){
-                if(!isset($sortArray[$key])){
-                    $sortArray[$key] = array();
-                }
-                $sortArray[$key][] = $value;
+            //column index start from 0
+            $column_index = -1;
+            foreach ($cellIterator as $cell) {
+                $column_index++;
+                $out_sheet->setCellValueByColumnAndRow($column_index, $row_index, $cell->getValue());
             }
         }
 
-        $orderby = "A"; //change this to whatever key you want from the array
-
-        array_multisort($sortArray[$orderby],SORT_ASC,$allDataInSheet);
-
-        $objPHPExcel->getActiveSheet()->fromArray(
-            $allDataInSheet,
-            NULL,
-            'A2'
-        );
-        $objWriter2007->save("$filename");  //push out to the client browser
+        //write excel file
+        $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+        $objWriter->save($xls_file.'.xlsx');    
     	
         return true;
     }
