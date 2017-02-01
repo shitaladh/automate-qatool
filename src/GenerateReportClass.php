@@ -39,13 +39,13 @@ class GenerateReportClass
 		copy('rulesets/phprmd.xml', 'reports/phprmd.xml');     			
 
 		//generate Codesniffer report
-		$codesnifferReport = 'reports/codesniffer/phpcs.csv';
-		exec('php vendor/bin/phpcs --standard=reports/phprcs.xml app > '.$codesnifferReport);	
+		$codesnifferReport = 'reports/codesniffer/phprcs.csv';
+		exec('php vendor/bin/phpcs -s --standard=reports/phprcs.xml app > '.$codesnifferReport);	
  		//generate Mess detector report
 		$messDetectorReport = 'reports/phpmd/phpmd.csv';		
 		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);
 
-		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcs','reports/codesniffer/new-phpcs.csv');
+		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phprcs','reports/codesniffer/new-phprcs.csv');
 		self::convertReportToExcel($messDetectorReport,'reports/phpmd/phpmd','reports/phpmd/new-phpmd.csv');
 		return true;
     }
