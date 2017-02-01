@@ -2,8 +2,6 @@
 namespace Src;
 use PHPExcel;
 use PHPExcel_IOFactory;
-use Composer\Script\Event;
-use Composer\Installer\PackageEvent;
 require_once 'vendor/autoload.php';
 
 class GenerateReportClass
@@ -50,18 +48,6 @@ class GenerateReportClass
 
     public static function convertReportToExcel($csv_file, $xls_file,$csv_enc = null)
     {
-        /*$objReader = PHPExcel_IOFactory::createReader('CSV');
-
-        // If the files uses a delimiter other than a comma (e.g. a tab), then tell the reader
-        $objReader->setDelimiter("\t");
-        // If the files uses an encoding other than UTF-8 or ASCII, then tell the reader
-        //$objReader->setInputEncoding('UTF-16LE');
-        //$objReader->utf8_encode();
-
-        $objPHPExcel = $objReader->load($csv_file);
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save($xls_file.'.xls');*/
-
         $filename = $xls_file.'.xlsx';
 
         // set headers to redirect output to client browser as a file download
