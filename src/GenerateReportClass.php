@@ -117,11 +117,11 @@ class GenerateReportClass
             'A2'
         );
 
-        //create new cell
+    /*  //create new cell
         for($i=7;$i=count($allDataInSheet);$i++){
             $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, 5);
         }
-/*
+
         //multiply two cells
         for($j=7;$j<=37;$j++){
             $colD = ($objPHPExcel->getActiveSheet()->getCell('B'.$j)->getValue())*($objPHPExcel->getActiveSheet()->getCell('C'.$j)->getValue());
