@@ -116,6 +116,7 @@ class GenerateReportClass
             NULL,
             'A2'
         );
+         $objPHPExcel->getActiveSheet()->SetCellValue('C7', 5);
 
     /*  //create new cell
         for($i=7;$i=count($allDataInSheet);$i++){
