@@ -118,7 +118,7 @@ class GenerateReportClass
         );
         
       //create new cell
-        $totalCount = count($allDataInSheet)+7; 
+        $totalCount = 20; 
         for($i=7;$i=$totalCount;$i++){
             $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, 5);
         }
