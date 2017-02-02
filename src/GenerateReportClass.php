@@ -116,11 +116,10 @@ class GenerateReportClass
             NULL,
             'A2'
         );
-         $objPHPExcel->getActiveSheet()->SetCellValue('C7', 5);
-
+        
       //create new cell
         $totalCount = count($allDataInSheet)+7; 
-        for($i=7;$i=;$i++){
+        for($i=7;$i=$totalCount;$i++){
             $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, 5);
         }
 
@@ -131,7 +130,7 @@ class GenerateReportClass
 
         }
 
-    /*    //addition of cells
+        //addition of cells
         $colDSum=0;
         for($k=7;$k<=$totalCount;$k++){
             $colDSum = ($objPHPExcel->getActiveSheet()->getCell('D'.$k)->getValue()) + $colDSum;
