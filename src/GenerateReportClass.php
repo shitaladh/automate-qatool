@@ -118,21 +118,21 @@ class GenerateReportClass
         );
         
       //create new cell
-        $totalCount = 19; 
-        for($i=7;$i=$totalCount;$i++){
-            $objPHPExcel->getActiveSheet()->SetCellValue('C'.(string)($i), 5);
+        $totalCount = 20; 
+        for($i=7;$i<=$totalCount;$i++){
+            $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, 5);
         }
 
         //multiply two cells
-        for($j=7;$j=$totalCount;$j++){
-            $colD = ($objPHPExcel->getActiveSheet()->getCell('B'.(string)($j))->getValue())*($objPHPExcel->getActiveSheet()->getCell('C'.(string)($j))->getValue());
-            $objPHPExcel->getActiveSheet()->SetCellValue('D'.(string)($j), $colD);
+        for($j=7;$j<=$totalCount;$j++){
+            $colD = ($objPHPExcel->getActiveSheet()->getCell('B'.$j)->getValue())*($objPHPExcel->getActiveSheet()->getCell('C'.$j)->getValue());
+            $objPHPExcel->getActiveSheet()->SetCellValue('D'.$j, $colD);
 
         }
 
     /*    //addition of cells
         $colDSum=0;
-        for($k=7;$k=20;$k++){
+        for($k=7;$k=19;$k++){
             $colDSum = ($objPHPExcel->getActiveSheet()->getCell('D'.$k)->getValue()) + $colDSum;
         }
         $objPHPExcel->getActiveSheet()->setCellValue('B6', 'Instance');
