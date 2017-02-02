@@ -120,13 +120,13 @@ class GenerateReportClass
       //create new cell
         $totalCount = 19; 
         for($i=7;$i=$totalCount;$i++){
-            $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, 5);
+            $objPHPExcel->getActiveSheet()->SetCellValue('C'.(string)($i), 5);
         }
 
         //multiply two cells
         for($j=7;$j=$totalCount;$j++){
-            $colD = ($objPHPExcel->getActiveSheet()->getCell('B'.$j)->getValue())*($objPHPExcel->getActiveSheet()->getCell('C'.$j)->getValue());
-            $objPHPExcel->getActiveSheet()->SetCellValue('D'.$j, $colD);
+            $colD = ($objPHPExcel->getActiveSheet()->getCell('B'.(string)($j))->getValue())*($objPHPExcel->getActiveSheet()->getCell('C'.(string)($j))->getValue());
+            $objPHPExcel->getActiveSheet()->SetCellValue('D'.(string)($j), $colD);
 
         }
 
