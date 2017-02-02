@@ -167,20 +167,19 @@ class GenerateReportClass
 
 
         //get mess detector count
-        $md_filepath = $md_file;
-        $md_handle = fopen($md_filepath, "r");
-        $md_lineNo = 0;
-        if ($md_handle) {
-            while (($line = fgets($md_handle)) !== false) {
-            $md_lineNo++;
+        $filepath = $md_file;
+        $handle = fopen($filepath, "r");
+        $lineNo = 0;
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+            $lineNo++;
             }
-        fclose($md_handle);
+        fclose($handle);
         } else {
             // error opening the file.
         } 
         $objPHPExcel->getActiveSheet()->setCellValue('A55', 'PHP Mess detector Report');
-        $objPHPExcel->getActiveSheet()->setCellValue('B55', $md_lineNo);
-
+        $objPHPExcel->getActiveSheet()->setCellValue('B55', $lineNo);       
 
        /* //get copypaste detector count
         $filepath = __DIR__ . "/" . $argv[1] . "/reports/copypaste/phpcpd.txt";
