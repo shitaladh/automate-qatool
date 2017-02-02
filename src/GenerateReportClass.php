@@ -116,7 +116,7 @@ class GenerateReportClass
             NULL,
             'A2'
         );
-
+        /*
         //create new cell
         for($i=7;$i=count($allDataInSheet);$i++){
             $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, 5);
@@ -179,7 +179,7 @@ class GenerateReportClass
             // error opening the file.
         } 
         $objPHPExcel->getActiveSheet()->setCellValue('A55', 'PHP Mess detector Report');
-        $objPHPExcel->getActiveSheet()->setCellValue('B55', $lineNo);       
+        $objPHPExcel->getActiveSheet()->setCellValue('B55', $lineNo);       */
 
        /* //get copypaste detector count
         $filepath = __DIR__ . "/" . $argv[1] . "/reports/copypaste/phpcpd.txt";
