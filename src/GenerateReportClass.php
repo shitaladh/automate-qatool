@@ -128,7 +128,7 @@ class GenerateReportClass
             $objPHPExcel->getActiveSheet()->SetCellValue('D'.$j, $colD);
 
         }
-
+/*
         //addition of cells
         $colDSum=0;
         for($k=7;$k<=37;$k++){
@@ -166,7 +166,7 @@ class GenerateReportClass
         } 
 
 
-     /*   //get mess detector count
+        //get mess detector count
         $filepath = $md_file;
         $handle = fopen($filepath, "r");
         $lineNo = 0;
