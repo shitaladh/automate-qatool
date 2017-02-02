@@ -166,7 +166,7 @@ class GenerateReportClass
         } 
 
 
-        //get mess detector count
+     /*   //get mess detector count
         $filepath = $md_file;
         $handle = fopen($filepath, "r");
         $lineNo = 0;
