@@ -45,12 +45,12 @@ class GenerateReportClass
 		$messDetectorReport = 'reports/phpmd/phpmd.txt';		
 		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);
 
-		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcssummary','reports/codesniffer/new-phpcssummary.csv');
+		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcssummary','reports/codesniffer/new-phpcssummary.csv',$messDetectorReport);
 		//self::convertReportToExcel($messDetectorReport,'reports/phpmd/phpmd','reports/phpmd/new-phpmd.txt');
 		return true;
     }
 
-    public static function convertReportToExcel($csv_file, $xls_file, $new_file)
+    public static function convertReportToExcel($csv_file, $xls_file, $new_file,$md_file)
     {
         $filename = $xls_file.'.xlsx';
 
@@ -116,7 +116,7 @@ class GenerateReportClass
             NULL,
             'A2'
         );
-/*
+
         //create new cell
         for($i=7;$i=count($allDataInSheet);$i++){
             $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, 5);
@@ -179,7 +179,8 @@ class GenerateReportClass
             // error opening the file.
         } 
         $objPHPExcel->getActiveSheet()->setCellValue('A55', 'PHP Mess detector Report');
-        $objPHPExcel->getActiveSheet()->setCellValue('B55', $lineNo);       
+        $objPHPExcel->getActiveSheet()->setCellValue('B55', $lineNo);
+       
 
        /* //get copypaste detector count
         $filepath = __DIR__ . "/" . $argv[1] . "/reports/copypaste/phpcpd.txt";
