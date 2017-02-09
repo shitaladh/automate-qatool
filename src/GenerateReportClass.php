@@ -12,45 +12,52 @@ require_once 'vendor/autoload.php';
 class GenerateReportClass
 {
     public static function generateReport(Event $event)
-    {    	
+    {       
         ob_start();
         if (!file_exists('reports')) {
-    		mkdir('reports', 0777, true);  
-    		self::createDir();
-    		
-		} else {
-			if (!file_exists('reports/codesniffer')) {
-				self::createDir();
-			}
-		}
+            mkdir('reports', 0777, true);  
+            self::createDir();
+            
+        } else {
+            if (!file_exists('reports/codesniffer')) {
+                self::createDir();
+            }
+        }
         ob_end_flush();
-		return true;
+        return true;
     }
 
     public static function createDir()
-    {    	
-    	mkdir('reports/codesniffer', 0777, true);
-    	if (!file_exists('reports/phpmd'))
-    	{
-			mkdir('reports/phpmd', 0777, true); 
-		}		
-		
-		copy('rulesets/phprcs.xml', 'reports/phprcs.xml');   
-		copy('rulesets/phprmd.xml', 'reports/phprmd.xml');     			
+    {       
+        mkdir('reports/codesniffer', 0777, true);
+        if (!file_exists('reports/phpmd'))
+        {
+            mkdir('reports/phpmd', 0777, true); 
+            mkdir('reports/copypaste', 0777, true);
+            mkdir('reports/phpmetrics', 0777, true);             
+        }       
+        
+        copy('vendor/shital/gitpro/rulesets/phprcs.xml', 'reports/phprcs.xml');   
+        copy('vendor/shital/gitpro/rulesets/phprmd.xml', 'reports/phprmd.xml');                 
 
-		//generate Codesniffer report
-		$codesnifferReport = 'reports/codesniffer/phpcssummary.csv';
-		exec('php vendor/bin/phpcs -s --report=source --standard=reports/phprcs.xml app > '.$codesnifferReport);	
- 		//generate Mess detector report
-		$messDetectorReport = 'reports/phpmd/phpmd.txt';		
-		exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);
+        //generate Codesniffer report
+        $codesnifferReport = 'reports/codesniffer/phpcssummary.csv';
+        exec('php vendor/bin/phpcs -s --report=source --standard=reports/phprcs.xml app > '.$codesnifferReport);    
+        //generate Mess detector report
+        $messDetectorReport = 'reports/phpmd/phpmd.txt';        
+        exec('php vendor/bin/phpmd app text reports/phprmd.xml > '.$messDetectorReport);
 
-		self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcssummary','reports/codesniffer/new-phpcssummary.csv',$messDetectorReport);
-		//self::convertReportToExcel($messDetectorReport,'reports/phpmd/phpmd','reports/phpmd/new-phpmd.txt');
-		return true;
+        $copyPasteReport = 'reports/copypaste/phpcpd.txt';        
+        exec('php vendor/bin/phpcpd app > '.$copyPasteReport); 
+
+        /*$phpMetricsReport = 'reports/phpmetrics/phpmetrics.html';        
+        exec('php vendor/bin/phpmetrics --report-html='.$phpMetricsReport.' app');*/         
+
+        self::convertReportToExcel($codesnifferReport,'reports/codesniffer/phpcssummary','reports/codesniffer/new-phpcssummary.csv',$messDetectorReport, $copyPasteReport);      
+        return true;
     }
 
-    public static function convertReportToExcel($csv_file, $xls_file, $new_file,$md_file)
+    public static function convertReportToExcel($csv_file, $xls_file, $new_file,$md_file,$cp_file)
     {
         $filename = $xls_file.'.xlsx';
 
@@ -183,9 +190,9 @@ class GenerateReportClass
         $objPHPExcel->getActiveSheet()->setCellValue('B55', $lineNo);
        
 
-       /* //get copypaste detector count
-        $filepath = __DIR__ . "/" . $argv[1] . "/reports/copypaste/phpcpd.txt";
-        $handle = fopen($filepath, "r");
+        //get copypaste detector count
+        $filepath_cp = $cp_file;
+        $handle = fopen($filepath_cp, "r");
         $lineNo = 0;
         if ($handle) {
             while (($line = fgets($handle)) !== false) {
@@ -194,10 +201,29 @@ class GenerateReportClass
         fclose($handle);
         } else {
             // error opening the file.
-        }*/
+        }
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A57', 'PHP Copy Paste detector Report');
+        $objPHPExcel->getActiveSheet()->setCellValue('B57', $lineNo);
+
+        /*//get phpmetrics detector count
+        $filepath_mt = $phpMetricsReport;
+        $handle = fopen($filepath_mt, "r");
+        $lineNo = 0;
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+            $lineNo++;
+            }
+        fclose($handle);
+        } else {
+            // error opening the file.
+        }
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A59', 'PHP PhpMetrics Report');
+        $objPHPExcel->getActiveSheet()->setCellValue('B59', $lineNo);*/
 
         $objWriter2007->save("$filename");  //push out to the client browser
-    	
+        
         return true;
     }
 }
