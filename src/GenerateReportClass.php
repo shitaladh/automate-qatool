@@ -124,17 +124,33 @@ class GenerateReportClass
             'A2'
         );
         
-      //create new cell
+        $multiplierNum = 5;
+        $mulitplierArrayOfTwo = array('Generic.CodeAnalysis.ForLoopWithTestFunctionCall.NotAllowed',
+                                      'Generic.CodeAnalysis.UselessOverridingMethod.Found',
+                                      'Generic.ControlStructures.InlineControlStructure.Discouraged',
+                                      'Generic.Files.LineLength.TooLong',
+                                      'Generic.Metrics.CyclomaticComplexity.MaxExceeded',
+                                      'Generic.Metrics.CyclomaticComplexity.TooHigh',
+                                      'Generic.PHP.NoSilencedErrors.Discouraged',
+                                      'Squiz.PHP.NonExecutableCode.ReturnNotRequired');
+        
+        //create new cell
         $totalCount = 20; 
         for($i=7;$i<=$totalCount;$i++){
-            $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, 5);
+
+            if(in_array($objPHPExcel->getActiveSheet()->getCell('a'.$i)->getValue(), $mulitplierArrayOfTwo)) {
+                $multiplierNum = 2;
+            } else if($objPHPExcel->getActiveSheet()->getCell('a'.$i)->getValue() == 'PHP Copy Paste detector Report') {
+                $multiplierNum = 10;
+            } 
+            
+            $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, $multiplierNum);
         }
 
         //multiply two cells
         for($j=7;$j<=$totalCount;$j++){
             $colD = ($objPHPExcel->getActiveSheet()->getCell('B'.$j)->getValue())*($objPHPExcel->getActiveSheet()->getCell('C'.$j)->getValue());
             $objPHPExcel->getActiveSheet()->SetCellValue('D'.$j, $colD);
-
         }
 
        //addition of cells
